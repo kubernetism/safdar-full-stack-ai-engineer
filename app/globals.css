@@ -1,53 +1,539 @@
+/*
+ * Session Log: a brutalist terminal design system.
+ * Dark-first, warm off-black and bone, one terracotta accent.
+ * Hard 2–3px borders, visible grid, offset hard shadows, Geist + Geist Mono.
+ */
+
 :root {
-  --canvas: #f3f4f5;
-  --surface: #e9ecef;
-  --ink: #15181c;
-  --muted: #5d656e;
-  --line: rgba(21, 24, 28, 0.28);
-  --accent: #1454aa;
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  color-scheme: light dark;
+  /* Surfaces */
+  --bg: #141210;
+  --bg-raised: #1c1916;
+  --bg-sunken: #0e0d0b;
+  --bg-hover: #26221e;
+
+  /* Ink */
+  --bone: #efeadf;
+  --bone-dim: #b9b2a5;
+  --bone-mute: #8f897e; /* 5.3:1 on --bg; small text allowed */
+
+  /* Accent: terracotta. --accent fills, --accent-fg is accent-coloured text. */
+  --accent: #d97757;
+  --accent-fg: #d97757; /* 6.2:1 on --bg */
+  --accent-ink: #141210; /* text on accent fills, 6.4:1 */
+  --accent-wash: rgb(217 119 87 / 0.14);
+  --on-bone: #141210; /* text on inverted (--bone) surfaces */
+  --focus: #d97757;
+
+  /* Diff and status */
+  --add: #9ccc7a;
+  --add-wash: rgb(156 204 122 / 0.12);
+  --del: #ef7f73;
+  --del-wash: rgb(239 127 115 / 0.12);
+
+  /* Lines */
+  --line: var(--bone);
+  --line-soft: color-mix(in srgb, var(--bone) 16%, transparent);
+  --line-faint: color-mix(in srgb, var(--bone) 6%, transparent);
+
+  /* Type */
+  --font-sans: var(--font-geist-sans), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* Scale */
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.1875rem;
+  --step-2: clamp(1.4rem, 1.1rem + 1.2vw, 1.9rem);
+  --step-3: clamp(1.9rem, 1.3rem + 2.6vw, 3.25rem);
+  --step-4: clamp(2.6rem, 1.4rem + 5vw, 5.5rem);
+
+  /* Geometry */
+  --border: 2px;
+  --border-heavy: 3px;
+  --gutter: clamp(1rem, 0.6rem + 1.8vw, 2.5rem);
+  --shell: 1440px;
+  --header-h: 3.5rem;
+  --shadow-accent: 8px 8px 0 0 var(--accent);
+  --shadow-bone: 6px 6px 0 0 var(--bone);
+
+  color-scheme: dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --canvas: #121416;
-    --surface: #1c2024;
-    --ink: #f2f5f7;
-    --muted: #abb3bc;
-    --line: rgba(242, 245, 247, 0.25);
-    --accent: #75a8ee;
+/* Light theme: bone paper, ink rules, the same terracotta. System default,
+   overridden either way by the toggle (data-theme on <html>). */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f3eee4;
+    --bg-raised: #fbf8f2;
+    --bg-sunken: #e8e1d3;
+    --bg-hover: #e2dacb;
+    --bone: #141210;
+    --bone-dim: #48423a; /* 8.6:1 on --bg */
+    --bone-mute: #685f54; /* 5.4:1 on --bg */
+    --accent-fg: #a3461f; /* 5.2:1 on --bg */
+    --accent-wash: rgb(217 119 87 / 0.18);
+    --on-bone: #f3eee4;
+    --focus: #a3461f;
+    --add: #2e6a1c;
+    --add-wash: rgb(46 106 28 / 0.1);
+    --del: #ad2a1e;
+    --del-wash: rgb(173 42 30 / 0.09);
+    color-scheme: light;
   }
 }
 
-* {
+:root[data-theme="light"] {
+  --bg: #f3eee4;
+  --bg-raised: #fbf8f2;
+  --bg-sunken: #e8e1d3;
+  --bg-hover: #e2dacb;
+  --bone: #141210;
+  --bone-dim: #48423a; /* 8.6:1 on --bg */
+  --bone-mute: #685f54; /* 5.4:1 on --bg */
+  --accent-fg: #a3461f; /* 5.2:1 on --bg */
+  --accent-wash: rgb(217 119 87 / 0.18);
+  --on-bone: #f3eee4;
+  --focus: #a3461f;
+  --add: #2e6a1c;
+  --add-wash: rgb(46 106 28 / 0.1);
+  --del: #ad2a1e;
+  --del-wash: rgb(173 42 30 / 0.09);
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
-  height: 100%;
-  background: var(--canvas);
-  scroll-behavior: smooth;
+  background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
   min-width: 320px;
-  min-height: 100%;
   margin: 0;
-  background: var(--canvas);
-  color: var(--ink);
-  font-family: var(--font-geist-sans), Arial, sans-serif;
-  text-rendering: optimizeLegibility;
+  background-color: var(--bg);
+  /* The visible 64px grid behind everything. */
+  background-image:
+    linear-gradient(var(--line-faint) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-faint) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center top;
+  color: var(--bone);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure {
+  margin: 0;
+}
+
+:where(ul[role="list"], ol[role="list"]) {
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }
 
 a {
   color: inherit;
 }
 
+button {
+  font: inherit;
+  color: inherit;
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--font-mono);
+}
+
 ::selection {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* ---------- Layout primitives ---------- */
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* The framed column: thick rules down both sides of the page on wide screens. */
+.frame {
+  max-width: var(--shell);
+  margin-inline: auto;
+  border-inline: var(--border) solid var(--line-soft);
+}
+
+@media (max-width: 1480px) {
+  .frame {
+    border-inline: 0;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 200;
+  padding: 0.7rem 1rem;
+  border: var(--border) solid var(--bone);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+  outline-color: var(--bone);
+}
+
+/* ---------- Terminal glyphs (drawn in CSS: the Geist subsets lack them) ---------- */
+
+/* ● tool-call bullet */
+.g-dot {
+  display: inline-block;
+  flex: none;
+  width: 0.62em;
+  height: 0.62em;
+  border-radius: 50%;
+  background: var(--add);
+  vertical-align: 0.06em;
+}
+
+/* ⎿ result elbow */
+.g-elbow {
+  display: inline-block;
+  flex: none;
+  width: 0.75em;
+  height: 0.7em;
+  margin-inline: 0.15em 0.45em;
+  border-left: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  opacity: 0.6;
+  vertical-align: 0.3em;
+}
+
+/* █ block cursor */
+.g-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  background: var(--accent);
+  vertical-align: -0.12em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .g-cursor[data-blink] {
+    animation: g-blink 1.05s steps(1, end) infinite;
+  }
+}
+
+@keyframes g-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ☐ / ☒ todo boxes */
+.g-box {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: 0.85em;
+  height: 0.85em;
+  border: 1.5px solid currentColor;
+  vertical-align: -0.08em;
+}
+
+.g-box[data-checked]::before,
+.g-box[data-checked]::after {
+  content: "";
+  position: absolute;
+  inset: 50% -1px auto;
+  height: 1.5px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.g-box[data-checked]::after {
+  transform: rotate(-45deg);
+}
+
+/* ---------- Shared components ---------- */
+
+/* Section header strip: [idx] /name ................ meta */
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 3rem;
+  padding-block: 0.5rem;
+  border-bottom: var(--border) solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  text-transform: lowercase;
+}
+
+.sec-head__idx {
+  color: var(--accent-fg);
+  font-weight: 700;
+}
+
+.sec-head__name {
+  font-weight: 700;
+}
+
+.sec-head__rule {
+  flex: 1;
+  height: 0;
+  border-top: 1.5px dashed var(--line-soft);
+}
+
+.sec-head__meta {
+  color: var(--bone-mute);
+}
+
+@media (max-width: 480px) {
+  .sec-head__rule {
+    display: none;
+  }
+
+  .sec-head__meta {
+    margin-left: auto;
+  }
+}
+
+/* Brutal buttons: thick border, hard offset shadow that collapses on press. */
+.btn {
+  --btn-bg: var(--bone);
+  --btn-fg: var(--on-bone);
+  --btn-shadow: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  padding: 0.7rem 1.15rem;
+  border: var(--border) solid var(--bone);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  box-shadow: 5px 5px 0 0 var(--btn-shadow);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 120ms ease-out,
+    box-shadow 120ms ease-out,
+    background-color 120ms ease-out;
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 0 var(--btn-shadow);
+}
+
+.btn:active {
+  transform: translate(5px, 5px);
+  box-shadow: 0 0 0 0 var(--btn-shadow);
+}
+
+.btn--accent {
+  --btn-bg: var(--accent);
+  --btn-fg: var(--accent-ink);
+  --btn-shadow: var(--bone);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--bone);
+  --btn-shadow: var(--line-soft);
+}
+
+.btn--ghost:hover {
+  --btn-bg: var(--bg-hover);
+}
+
+.btn kbd {
+  padding: 0.05rem 0.35rem;
+  border: 1.5px solid currentColor;
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+/* Tool-call frame: "● Name(arg)" header bar over a result body. */
+.tool {
+  border: var(--border) solid var(--line);
+  background: var(--bg-raised);
+}
+
+.tool__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.6rem;
+  padding: 0.45rem 0.85rem;
+  border-bottom: var(--border) solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.tool__name {
+  color: var(--bone);
+  font-weight: 700;
+}
+
+.tool__arg {
+  color: var(--bone-dim);
+}
+
+.tool__status {
+  margin-left: auto;
+  color: var(--add);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.tool__body {
+  padding: 1rem 0.85rem 1.1rem;
+}
+
+/* ⎿ result line */
+.result {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  color: var(--bone-dim);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  line-height: 1.6;
+}
+
+/* Inline diff lines */
+.diff {
+  display: grid;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  line-height: 1.7;
+}
+
+.diff__line {
+  display: grid;
+  grid-template-columns: 1.6em minmax(0, 1fr);
+  padding-inline: 0.4rem;
+}
+
+.diff__line::before {
+  font-weight: 700;
+}
+
+.diff__line[data-op="add"] {
+  background: var(--add-wash);
+  color: var(--add);
+}
+
+.diff__line[data-op="add"]::before {
+  content: "+";
+}
+
+.diff__line[data-op="del"] {
+  background: var(--del-wash);
+  color: var(--del);
+}
+
+.diff__line[data-op="del"]::before {
+  content: "−";
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  padding: 0.12rem 0.5rem;
+  border: 1.5px solid var(--line-soft);
+  color: var(--bone-dim);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* Text link with a chunky underline that floods on hover. */
+.link {
+  color: var(--bone);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-fg);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.22em;
+  transition:
+    background-color 120ms,
+    color 120ms;
+}
+
+.link:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+  text-decoration-color: transparent;
 }

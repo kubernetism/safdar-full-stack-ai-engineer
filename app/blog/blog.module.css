@@ -1,0 +1,156 @@
+.accent {
+  color: var(--accent-fg);
+}
+
+.head {
+  padding-block: clamp(1.5rem, 4vw, 3rem) clamp(2.5rem, 6vw, 4.5rem);
+  border-bottom: var(--border-heavy) solid var(--line);
+}
+
+.cmd {
+  color: var(--bone-dim);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+.title {
+  margin-block: 0.75rem clamp(1.5rem, 4vw, 2.75rem);
+  font-size: clamp(4rem, 19vw, 17rem);
+  font-weight: 900;
+  letter-spacing: -0.07em;
+  line-height: 0.8;
+  text-transform: uppercase;
+}
+
+.headGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 2rem clamp(2rem, 4vw, 4rem);
+}
+
+.lede {
+  max-width: 40ch;
+  color: var(--bone-dim);
+  font-size: var(--step-2);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.seriesCard {
+  box-shadow: var(--shadow-accent);
+}
+
+.seriesText {
+  color: var(--bone-dim);
+}
+
+.seriesText strong {
+  color: var(--bone);
+}
+
+.progress {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 1rem;
+}
+
+.progress span {
+  height: 0.9rem;
+  border: 1.5px solid var(--line-soft);
+}
+
+.progress span[data-done] {
+  border-color: var(--accent-fg);
+  background: var(--accent);
+}
+
+.block {
+  padding-block: clamp(2rem, 5vw, 3.5rem) clamp(2.5rem, 6vw, 4.5rem);
+  border-bottom: var(--border-heavy) solid var(--line);
+}
+
+.subTitle {
+  padding-block: 1.5rem;
+  font-size: var(--step-3);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.posts {
+  margin: 0;
+  border-top: var(--border) solid var(--line);
+}
+
+.posts li:last-child > * {
+  border-bottom: 0;
+}
+
+.queue {
+  max-width: 62rem;
+}
+
+.todo {
+  margin: 0;
+  padding: 0.5rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.todo li {
+  display: grid;
+  grid-template-columns: auto 2rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+}
+
+.todo li + li {
+  border-top: 1.5px dashed var(--line-soft);
+}
+
+.todoDone {
+  color: var(--add);
+}
+
+.todoPart {
+  color: var(--bone-mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.todoCopy {
+  display: grid;
+  gap: 0.15rem;
+  color: var(--bone);
+}
+
+.todoCopy strong {
+  font-weight: 700;
+}
+
+.todoNote {
+  display: flex;
+  align-items: baseline;
+  color: var(--bone-mute);
+  font-size: var(--step--1);
+}
+
+@media (max-width: 860px) {
+  .headGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .todo li {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .todoPart {
+    display: none;
+  }
+}

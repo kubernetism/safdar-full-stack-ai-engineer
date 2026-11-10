@@ -1,0 +1,360 @@
+/* ---------- Header ---------- */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: var(--border) solid var(--line);
+  background: var(--bg);
+}
+
+.headerInner {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: stretch;
+  min-height: var(--header-h);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-right: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.brandName {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.brandPath {
+  color: var(--bone-mute);
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nav ul {
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+  border-left: var(--border) solid var(--line);
+}
+
+.nav li {
+  display: flex;
+}
+
+.nav a {
+  display: flex;
+  align-items: center;
+  padding-inline: 1.1rem;
+  border-right: var(--border) solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color 100ms,
+    color 100ms;
+}
+
+.nav a span {
+  color: var(--accent-fg);
+}
+
+.nav a:hover {
+  background: var(--bone);
+  color: var(--on-bone);
+}
+
+.nav a:hover span {
+  color: inherit;
+}
+
+.nav a[aria-current="page"] {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.nav a[aria-current="page"] span {
+  color: inherit;
+}
+
+.nav a:focus-visible,
+.rebuild:focus-visible {
+  outline-offset: -5px;
+}
+
+.rebuild {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-inline: 1.1rem;
+  border: 0;
+  border-right: var(--border) solid var(--line);
+  background: transparent;
+  color: var(--accent-fg);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 100ms,
+    color 100ms;
+}
+
+.themeToggle {
+  display: flex;
+  align-items: center;
+  padding-inline: 1.1rem;
+  border: 0;
+  border-right: var(--border) solid var(--line);
+  background: transparent;
+  color: var(--bone);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 100ms,
+    color 100ms;
+}
+
+.themeToggle:hover {
+  background: var(--bone);
+  color: var(--on-bone);
+}
+
+.themeToggle:focus-visible {
+  outline-offset: -5px;
+}
+
+.themeLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Show the label for the theme you would switch to. */
+/* Without JS (no data-theme) the toggle and /rebuild hide: neither could work. */
+:global(html:not([data-theme])) .themeToggle,
+:global(html:not([data-theme])) .rebuild,
+:global(html:not([data-theme])) .footerRebuild,
+:global(html[data-theme="light"]) .themeLabel[data-show-in="dark"],
+:global(html[data-theme="dark"]) .themeLabel[data-show-in="light"] {
+  display: none;
+}
+
+.rebuild:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rebuild:hover svg {
+    animation: spin 0.8s steps(6, end) infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 760px) {
+  .headerInner {
+    grid-template-columns: 1fr auto auto;
+    padding-inline: 0;
+  }
+
+  .themeToggle {
+    grid-row: 1;
+    grid-column: 2;
+    border-right: 0;
+    border-left: var(--border) solid var(--line);
+    padding-inline: 0.9rem;
+  }
+
+  .brand {
+    padding-left: var(--gutter);
+    min-height: 3rem;
+  }
+
+  .rebuild {
+    grid-row: 1;
+    grid-column: 3;
+    border-right: 0;
+    border-left: var(--border) solid var(--line);
+    padding-inline: var(--gutter);
+  }
+
+  .nav {
+    grid-column: 1 / -1;
+    border-top: var(--border) solid var(--line);
+  }
+
+  .nav ul {
+    flex: 1;
+    border-left: 0;
+  }
+
+  .nav li {
+    flex: 1;
+  }
+
+  .nav li:last-child a {
+    border-right: 0;
+  }
+
+  .nav a {
+    flex: 1;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding-inline: 0.25rem;
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .brandPath {
+    display: none;
+  }
+}
+
+/* ---------- Footer ---------- */
+
+.footer {
+  position: relative;
+  overflow: hidden;
+  border-top: var(--border-heavy) solid var(--line);
+  background: var(--bg-sunken);
+}
+
+.footerInner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem 2rem;
+  align-items: center;
+  padding-block: 1.5rem 1rem;
+}
+
+.statusLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+.statusLine svg {
+  margin-right: 0.75rem;
+}
+
+.statusSeg {
+  padding-inline: 0.75rem;
+  border-left: 1.5px solid var(--line-soft);
+  color: var(--bone-dim);
+}
+
+.statusSeg:first-of-type {
+  padding-left: 0;
+  border-left: 0;
+  color: var(--bone);
+  font-weight: 700;
+}
+
+.statusOk {
+  color: var(--accent-fg);
+}
+
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  border: var(--border) solid var(--line);
+}
+
+.footerLinks li {
+  display: flex;
+}
+
+.footerLinks li + li {
+  border-left: var(--border) solid var(--line);
+}
+
+.footerLinks a,
+.footerRebuild {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  padding-inline: 0.9rem;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.footerRebuild {
+  color: var(--accent-fg);
+}
+
+.footerLinks a:hover,
+.footerRebuild:hover {
+  background: var(--bone);
+  color: var(--on-bone);
+}
+
+.footerLinks a:focus-visible,
+.footerRebuild:focus-visible {
+  outline-offset: -5px;
+}
+
+.copyright {
+  grid-column: 1 / -1;
+  color: var(--bone-mute);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.wordmark {
+  margin: 0 0 -0.16em;
+  padding-inline: var(--gutter);
+  color: color-mix(in srgb, var(--bone) 7%, transparent);
+  font-size: clamp(2.5rem, 11.4vw, 11.6rem);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+  white-space: nowrap;
+  user-select: none;
+}
+
+@media (max-width: 760px) {
+  .footerInner {
+    grid-template-columns: 1fr;
+  }
+
+  .footerLinks {
+    width: 100%;
+  }
+
+  .footerLinks li {
+    flex: 1 1 auto;
+  }
+
+  .footerLinks a,
+  .footerRebuild {
+    width: 100%;
+    justify-content: center;
+  }
+}

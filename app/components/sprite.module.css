@@ -1,0 +1,129 @@
+.sprite {
+  display: block;
+  flex: none;
+  overflow: visible;
+  height: auto;
+}
+
+.body,
+.armL,
+.armR {
+  fill: var(--accent);
+}
+
+.shade,
+.legL,
+.legR,
+.antenna {
+  fill: #b25a3c;
+}
+
+.visor {
+  fill: #1a1714;
+}
+
+.eye {
+  fill: #efeadf;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.spark {
+  fill: var(--bone);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.armL,
+.armR,
+.legL,
+.legR,
+.figure {
+  transform-box: fill-box;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .eye {
+    animation: blink 4.2s steps(1, end) infinite;
+  }
+
+  .spark {
+    animation: twinkle 1.6s steps(1, end) infinite;
+  }
+
+  .sprite[data-mode="idle"] .figure {
+    animation: bob 1.8s steps(1, end) infinite;
+  }
+
+  .sprite[data-mode="typing"] .armL {
+    animation: tap 0.22s steps(1, end) infinite;
+  }
+
+  .sprite[data-mode="typing"] .armR {
+    animation: tap 0.22s steps(1, end) -0.11s infinite;
+  }
+
+  .sprite[data-mode="walking"] .legL {
+    animation: step 0.3s steps(1, end) infinite;
+  }
+
+  .sprite[data-mode="walking"] .legR {
+    animation: step 0.3s steps(1, end) -0.15s infinite;
+  }
+
+  .sprite[data-mode="walking"] .figure {
+    animation: bob 0.3s steps(1, end) infinite;
+  }
+}
+
+@keyframes blink {
+  0%,
+  93%,
+  97% {
+    transform: scaleY(1);
+  }
+  94% {
+    transform: scaleY(0.2);
+  }
+  98% {
+    transform: scaleY(0.2);
+  }
+}
+
+@keyframes twinkle {
+  0% {
+    fill: var(--bone);
+    transform: rotate(0deg);
+  }
+  50% {
+    fill: var(--accent);
+    transform: rotate(45deg) scale(0.85);
+  }
+}
+
+@keyframes bob {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.5px);
+  }
+}
+
+@keyframes tap {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes step {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.6px);
+  }
+}

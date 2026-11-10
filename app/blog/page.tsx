@@ -1,51 +1,124 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { SiteFooter } from "../site-footer";
-import { SiteHeader } from "../site-header";
-import shared from "../page.module.css";
-import styles from "./page.module.css";
+import { Dot, Elbow, TodoBox } from "../components/glyphs";
+import { PostRow } from "../components/post-row";
+import { SectionHead } from "../components/section-head";
+import { SiteFrame } from "../components/site-frame";
+import { plannedParts, posts, SERIES } from "../content";
+import styles from "./blog.module.css";
 
 export const metadata: Metadata = {
   title: "Blog | Syed Safdar Ali Shah",
-  description: "Writing on AI agents, backend systems, and cloud-native development.",
+  description: "Writing on software security, AI agents, backend systems, and cloud-native development.",
 };
-
-const posts = [
-  { href: "/blog/secure-by-design", image: "/images/secure-by-design-cover.png", title: "Secure by design: building security in", description: "A practical introduction to safer software, in 100 short points." },
-  { href: "/blog/secure-by-default", image: "/images/secure-by-default-cover.png", title: "Secure by default: the safer starting point", description: "How secure settings protect customers from the start." },
-  { href: "/blog/customer-security-ownership", image: "/images/customer-security-ownership-cover.png", title: "Who owns customer security?", description: "Why software makers should take responsibility for customer security outcomes." },
-];
 
 export default function BlogPage() {
   return (
-    <div className={shared.page}>
-      <a className={shared.skipLink} href="#main-content">Skip to content</a>
-      <SiteHeader current="blog" />
-      <main id="main-content" className={styles.main}>
-        <section className={styles.intro} aria-labelledby="blog-title">
-          <p className={styles.eyebrow}>The blog</p>
-          <h1 id="blog-title">Ideas worth sharing.</h1>
-          <p>Notes on software security, AI agents, backend systems, and building for the cloud.</p>
-        </section>
-        <section className={styles.articles} aria-labelledby="articles-title">
-          <div className={styles.sectionHeader}>
-            <h2 id="articles-title">Articles</h2>
-          </div>
-          {posts.map((post, index) => <article className={styles.post} key={post.href}>
-            <Link className={styles.postImage} href={post.href} tabIndex={-1} aria-hidden="true">
-              <Image src={post.image} alt="" width={1672} height={941} sizes="(max-width: 767px) 100vw, 45vw" />
-            </Link>
-            <div className={styles.postContent}>
-              <p className={styles.postMeta}>Secure by design · Part {index + 1} of 10</p>
-              <h3><Link href={post.href}>{post.title}</Link></h3>
-              <p>{post.description}</p>
-              <Link className={styles.readLink} href={post.href} aria-label={`Read ${post.title}`}>Read article <span aria-hidden="true">↗</span></Link>
+    <SiteFrame current="blog">
+      <section className={styles.head} aria-labelledby="blog-title">
+        <div className="shell">
+          <p className={styles.cmd} aria-hidden="true">
+            <span className={styles.accent}>&gt;</span> cat ~/blog/series.md
+          </p>
+          <h1 id="blog-title" className={styles.title}>
+            Writing
+          </h1>
+          <div className={styles.headGrid}>
+            <p className={styles.lede}>
+              Notes on software security, AI agents, backend systems, and building for the cloud.
+            </p>
+            <div className={`tool ${styles.seriesCard}`}>
+              <div className="tool__head">
+                <Dot />
+                <span>
+                  <span className="tool__name">Read</span>
+                  <span className="tool__arg">(series.md)</span>
+                </span>
+                <span className="tool__status">
+                  {posts.length}/{SERIES.parts} published
+                </span>
+              </div>
+              <div className="tool__body">
+                <p className={styles.seriesText}>
+                  <strong>{SERIES.name}</strong> is a {SERIES.parts}-part series based on the joint CISA, NSA,
+                  FBI and international partners&rsquo;{" "}
+                  <a className="link" href={SERIES.sourceUrl} target="_blank" rel="noreferrer">
+                    {SERIES.sourceTitle}
+                  </a>
+                  . Each article summarises one theme in 100 short points.
+                </p>
+                <div
+                  className={styles.progress}
+                  role="img"
+                  aria-label={`${posts.length} of ${SERIES.parts} parts published`}
+                >
+                  {Array.from({ length: SERIES.parts }, (_, i) => (
+                    <span key={i} data-done={i < posts.length ? "" : undefined} />
+                  ))}
+                </div>
+              </div>
             </div>
-          </article>)}
-        </section>
-      </main>
-      <SiteFooter />
-    </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.block} aria-labelledby="published-title">
+        <div className="shell">
+          <SectionHead index="01" name="published" meta={`${posts.length} articles`} />
+          <h2 id="published-title" className={styles.subTitle}>
+            Published
+          </h2>
+        </div>
+        <ol className={styles.posts} role="list">
+          {posts.map((post) => (
+            <li key={post.slug}>
+              <PostRow post={post} />
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className={styles.block} aria-labelledby="queue-title">
+        <div className="shell">
+          <SectionHead index="02" name="queue" meta={`${plannedParts.length} planned`} />
+          <h2 id="queue-title" className={styles.subTitle}>
+            Up next in the series
+          </h2>
+          <div className={`tool ${styles.queue}`}>
+            <div className="tool__head">
+              <Dot tone="accent" />
+              <span className="tool__name">Update Todos</span>
+            </div>
+            <ol className={styles.todo} role="list">
+              {posts.map((post) => (
+                <li key={post.slug} className={styles.todoDone}>
+                  <TodoBox checked />
+                  <span className={styles.todoPart}>{String(post.part).padStart(2, "0")}</span>
+                  <span className={styles.todoCopy}>
+                    <Link className="link" href={`/blog/${post.slug}`}>
+                      {post.title}
+                    </Link>
+                    <span className={styles.todoNote}>published</span>
+                  </span>
+                </li>
+              ))}
+              {plannedParts.map((part) => (
+                <li key={part.part}>
+                  <TodoBox />
+                  <span className={styles.todoPart}>{String(part.part).padStart(2, "0")}</span>
+                  <span className={styles.todoCopy}>
+                    <strong>{part.title}</strong>
+                    <span className={styles.todoNote}>
+                      <Elbow />
+                      {part.text}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+    </SiteFrame>
   );
 }

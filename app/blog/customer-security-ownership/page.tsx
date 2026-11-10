@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { postBySlug } from "../../content";
 import { BlogArticle } from "../article";
 import { summarySections } from "./summary";
 
@@ -8,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function CustomerSecurityOwnershipPost() {
-  return <BlogArticle part={3} title="Who owns customer security?" description="Why software makers should take responsibility for the security outcomes their customers experience." image="/images/customer-security-ownership-cover.png" imageAlt="Interlocking metal structures supporting a protected blue element" sourcePages="11–19" sections={summarySections} />;
+  return <BlogArticle post={postBySlug("customer-security-ownership")} sections={summarySections} />;
 }
