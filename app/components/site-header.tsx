@@ -8,12 +8,14 @@ const NAV = [
   { href: "/#work", label: "work", key: "work" },
   { href: "/#skills", label: "skills", key: "skills" },
   { href: "/blog", label: "blog", key: "blog" },
+  { href: "/patterns", label: "patterns", key: "patterns" },
+  { href: "/fde", label: "fde", key: "fde" },
   { href: "/#contact", label: "contact", key: "contact" },
 ] as const;
 
-export function SiteHeader({ current }: { current?: "blog" }) {
+export function SiteHeader({ current }: { current?: "blog" | "patterns" | "fde" }) {
   return (
-    <header className={styles.header}>
+    <header className={`band ${styles.header}`}>
       <div className={`shell ${styles.headerInner}`}>
         <Link className={styles.brand} href="/" aria-label="Syed Safdar Ali Shah, home">
           <Sprite size={26} mode="idle" />

@@ -9,7 +9,7 @@ export function SiteFrame({
   before,
 }: {
   children: ReactNode;
-  current?: "blog";
+  current?: "blog" | "patterns" | "fde";
   /** Rendered first in the body, e.g. the home intro overlay. */
   before?: ReactNode;
 }) {

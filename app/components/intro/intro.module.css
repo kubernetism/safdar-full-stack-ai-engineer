@@ -9,11 +9,10 @@
   inset: 0;
   z-index: 100;
   display: none;
+  /* Same halftone paper as the page. */
   background-color: var(--bg);
-  background-image:
-    linear-gradient(var(--line-faint) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-faint) 1px, transparent 1px);
-  background-size: 64px 64px;
+  background-image: radial-gradient(var(--dot) 1.3px, transparent 1.5px);
+  background-size: 9px 9px;
   color: var(--bone);
   font-family: var(--font-mono);
   font-size: 13px;

@@ -21,6 +21,8 @@ import { SectionHead } from "./components/section-head";
 import { SiteFrame } from "./components/site-frame";
 import { Sprite } from "./components/sprite";
 import styles from "./home.module.css";
+import { items as fdeItems } from "./fde/data/items";
+import fde from "./fde/fde.module.css";
 
 const MARQUEE = ["Agents SDK", "MCP", "FastAPI", "Claude Code", "Docker", "Kubernetes", "Dapr", "CrewAI"];
 
@@ -29,6 +31,7 @@ export default function Home() {
     <SiteFrame before={<Intro />}>
       <Hero />
       <Marquee />
+      <FdeTeaser />
       <About />
       <Work />
       <Skills />
@@ -40,7 +43,11 @@ export default function Home() {
 
 function Hero() {
   return (
-    <section className={styles.hero} aria-labelledby="hero-title" style={{ "--t-exit": seconds(T.exit) }}>
+    <section
+      className={`band ${styles.hero}`}
+      aria-labelledby="hero-title"
+      style={{ "--t-exit": seconds(T.exit) }}
+    >
       <div className={`shell ${styles.heroMeta}`} aria-hidden="true">
         <span>
           <span className={styles.accent}>&gt;</span> whoami
@@ -110,6 +117,25 @@ function Hero() {
         </div>
       </div>
     </section>
+  );
+}
+
+function FdeTeaser() {
+  return (
+    <aside className={fde.teaser} aria-label="FDE roadmap">
+      <div className={`shell ${fde.teaserInner}`}>
+        <p className={fde.teaserText}>
+          <span className={fde.teaserNew}>new</span>
+          <span className={fde.teaserHeadline}>The Forward Deployed Engineer roadmap</span>
+          <span className={fde.teaserMeta}>
+            {fdeItems.length} skills from 100 live FDE postings · 5 phases · study notes for each
+          </span>
+        </p>
+        <Link className="btn btn--accent" href="/fde">
+          Open /fde <Arrow />
+        </Link>
+      </div>
+    </aside>
   );
 }
 

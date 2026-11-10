@@ -4,8 +4,9 @@
 
 /* ---------- Hero ---------- */
 
+/* Dotted band (see .band in globals.css): charcoal in dark, deeper pink in light. */
 .hero {
-  border-bottom: var(--border-heavy) solid var(--line);
+  border-bottom: 4px solid var(--band-rule);
 }
 
 .heroMeta {

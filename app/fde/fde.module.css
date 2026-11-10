@@ -1,0 +1,896 @@
+.accent {
+  color: var(--accent-fg);
+}
+
+/* ---------- Chips and badges ---------- */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  padding: 0.05rem 0.4rem;
+  border: 1.5px solid var(--line);
+  background: var(--bg-raised);
+  color: var(--bone);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* Assumed skills (asterisk) get the accent so they stand out as "expected". */
+.chip[data-assumed] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.chipLarge {
+  padding: 0.15rem 0.55rem;
+  font-size: 0.85rem;
+}
+
+.tier {
+  display: inline-flex;
+  flex: none;
+  padding: 0.05rem 0.4rem;
+  border: 1.5px dashed var(--line-soft);
+  color: var(--bone-dim);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tier[data-tier="high"] {
+  border-style: solid;
+  border-color: var(--bone);
+  color: var(--bone);
+}
+
+/* ---------- Index head ---------- */
+
+.head {
+  padding-block: clamp(1.5rem, 4vw, 3rem) clamp(2rem, 5vw, 3.5rem);
+  border-bottom: var(--border-heavy) solid var(--line);
+}
+
+.cmd {
+  color: var(--bone-dim);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+.title {
+  margin-block: 0.75rem clamp(1.5rem, 4vw, 2.5rem);
+  font-size: clamp(3rem, 14vw, 13rem);
+  font-weight: 900;
+  letter-spacing: -0.07em;
+  line-height: 0.82;
+  text-transform: uppercase;
+}
+
+.headGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 1.5rem clamp(2rem, 4vw, 4rem);
+}
+
+.intro {
+  display: grid;
+  gap: 1rem;
+}
+
+.introSmall {
+  max-width: 52ch;
+  color: var(--bone-dim);
+}
+
+.source {
+  box-shadow: var(--shadow-accent);
+}
+
+.sourceLine {
+  font-size: var(--step-1);
+  line-height: 1.4;
+}
+
+.sourceNote {
+  margin-top: 0.6rem;
+  color: var(--bone-dim);
+  font-size: 0.95rem;
+}
+
+.sourceStats {
+  margin-top: 0.8rem;
+  padding-top: 0.6rem;
+  border-top: 1.5px dashed var(--line-soft);
+  color: var(--bone-mute);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+@media (max-width: 900px) {
+  .headGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Blocks ---------- */
+
+.block,
+.dictionaryBlock {
+  padding-block: clamp(2rem, 5vw, 3.5rem) clamp(2.5rem, 6vw, 4.5rem);
+  border-bottom: var(--border-heavy) solid var(--line);
+}
+
+.blockTitle {
+  padding-block: 1.5rem 1rem;
+  font-size: var(--step-3);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.blockLede {
+  max-width: 60ch;
+  margin-bottom: 1.5rem;
+  color: var(--bone-dim);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+}
+
+.step {
+  display: grid;
+  align-content: start;
+  gap: 0.6rem;
+  padding: 1rem;
+  border: var(--border) solid var(--line);
+  background: var(--bg-raised);
+}
+
+.step strong {
+  font-weight: 800;
+}
+
+.stepNum {
+  color: var(--accent-fg);
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.takeaway {
+  display: flex;
+  align-items: baseline;
+  max-width: 75ch;
+  margin-top: 1.5rem;
+  color: var(--bone-dim);
+  font-style: italic;
+}
+
+@media (max-width: 1000px) {
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Roadmap phases ---------- */
+
+.phases {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  counter-reset: none;
+}
+
+.phase {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
+.phases li:nth-child(odd) .phase {
+  box-shadow: 6px 6px 0 0 var(--accent);
+}
+
+.phaseNum {
+  color: var(--accent-fg);
+  font-weight: 800;
+}
+
+.phaseBody {
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  padding: 0.9rem;
+}
+
+.phaseName {
+  font-size: var(--step-1);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.phaseGoal {
+  color: var(--bone-dim);
+  font-size: 0.9rem;
+}
+
+.phaseItems {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding-top: 0.6rem;
+  border-top: 1.5px dashed var(--line-soft);
+}
+
+.phaseItems li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  line-height: 1.3;
+}
+
+.phaseItems a {
+  min-width: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--line-soft);
+  text-underline-offset: 0.2em;
+}
+
+.phaseItems a:hover {
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+}
+
+@media (max-width: 1280px) {
+  .phases {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .phases {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .phases {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Checklist ---------- */
+
+.checklist {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.overall {
+  position: sticky;
+  top: calc(var(--header-h) + 0.75rem);
+  z-index: 5;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
+  border: var(--border-heavy) solid var(--line);
+  background: var(--bg-raised);
+  box-shadow: 5px 5px 0 0 var(--line);
+  font-family: var(--font-mono);
+}
+
+.overallLabel {
+  font-size: var(--step--1);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.saveNote {
+  grid-column: 1 / -1;
+  color: var(--bone-mute);
+  font-size: 0.72rem;
+}
+
+.reset {
+  min-height: 2.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+.reset[data-armed] {
+  --btn-bg: var(--accent);
+  --btn-fg: var(--accent-ink);
+}
+
+.progress {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.overall .progress {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.overall .progressLabel {
+  display: none;
+}
+
+.progressLabel,
+.progressPct {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.bar {
+  height: 1.1rem;
+  padding: 2px;
+  border: var(--border) solid var(--line);
+  background: var(--bg);
+}
+
+/* Segmented fill, like the source checklist's progress bar. */
+.barFill {
+  height: 100%;
+  background: repeating-linear-gradient(90deg, var(--accent) 0 10px, transparent 10px 13px);
+  transition: width 250ms steps(6, end);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barFill {
+    transition: none;
+  }
+}
+
+.groups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.75rem);
+  align-items: start;
+}
+
+.groupShort {
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.groupBody {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.groupName {
+  font-size: var(--step-2);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.tierRule {
+  margin-top: 0.5rem;
+  padding-block: 0.35rem;
+  border-bottom: 1.5px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.todo {
+  margin: 0;
+}
+
+.todo li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px dashed var(--line-soft);
+}
+
+.todoLabel {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: baseline;
+  gap: 0.6rem;
+  min-width: 0;
+  cursor: pointer;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+/* The real checkbox covers the drawn box: native semantics, custom look. */
+.todoInput {
+  position: absolute;
+  top: 0.15em;
+  left: 0;
+  width: 1em;
+  height: 1em;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.todoLabel :global(.g-box) {
+  margin-top: 0.15em;
+}
+
+.todoInput:focus-visible + :global(.g-box) {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.todo li[data-done] .todoText {
+  color: var(--bone-mute);
+  text-decoration: line-through;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+}
+
+.todo li[data-done] :global(.g-box) {
+  color: var(--accent-fg);
+}
+
+.todoLink {
+  flex: none;
+  padding: 0.05rem 0.4rem;
+  border: 1.5px solid var(--line);
+  background: var(--bg-raised);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.todoLink:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+@media (max-width: 1100px) {
+  .groups {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .overall {
+    position: static;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .overall .progress {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+/* ---------- Dictionary ---------- */
+
+.letters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-block: 1.5rem;
+}
+
+.letters a {
+  display: grid;
+  place-items: center;
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  border: var(--border) solid var(--line);
+  background: var(--bg-raised);
+  font-family: var(--font-mono);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.letters a:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.dictionary {
+  margin: 0;
+  border-top: var(--border) solid var(--line);
+}
+
+.letterGroup {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-block: 1rem;
+  border-bottom: var(--border) solid var(--line);
+  scroll-margin-top: calc(var(--header-h) + 7rem);
+}
+
+.letter {
+  color: var(--accent-fg);
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 0.9;
+}
+
+.entries {
+  display: grid;
+  gap: 1rem;
+}
+
+.entry dt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.75rem;
+}
+
+.term {
+  font-size: var(--step-1);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.term:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+}
+
+.entryMeta {
+  display: inline-flex;
+  gap: 0.4rem;
+}
+
+.entry dd {
+  max-width: 70ch;
+  margin: 0.2rem 0 0;
+  color: var(--bone-dim);
+}
+
+.dictionaryFoot {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 560px) {
+  .letterGroup {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  .letter {
+    font-size: 2.2rem;
+  }
+}
+
+/* ---------- Item page ---------- */
+
+.itemKicker {
+  gap: 0.6rem 0.75rem;
+}
+
+.itemTitle {
+  max-width: 22ch;
+  font-size: clamp(2.2rem, 6vw, 5.5rem);
+}
+
+.phaseList a {
+  grid-template-columns: 2.9rem minmax(0, 1fr);
+}
+
+.itemBody {
+  display: grid;
+  align-content: start;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.card {
+  scroll-margin-top: calc(var(--header-h) + 1.25rem);
+}
+
+.cardTitle {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.cardBody {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.1rem 1.1rem 1.3rem;
+}
+
+.prose {
+  max-width: 68ch;
+  font-size: var(--step-1);
+  line-height: 1.6;
+}
+
+.dictTerm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.9rem;
+  font-size: var(--step-2);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.dictPos {
+  color: var(--bone-mute);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.dictDef {
+  max-width: 62ch;
+  padding-left: 1rem;
+  border-left: 4px solid var(--accent);
+  font-size: var(--step-1);
+  line-height: 1.5;
+}
+
+.provenance {
+  display: flex;
+  align-items: baseline;
+  color: var(--bone-mute);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.pending {
+  display: flex;
+  align-items: baseline;
+  padding: 1rem;
+  border: var(--border) dashed var(--line-soft);
+  color: var(--bone-dim);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+.levels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+}
+
+.level {
+  display: grid;
+  align-content: start;
+  gap: 0.6rem;
+  padding: 0.85rem;
+  border: var(--border) solid var(--line);
+  background: var(--bg);
+}
+
+.levelName {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.levelNum {
+  margin-right: 0.3rem;
+  padding: 0 0.35rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.milestones {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.milestones li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  color: var(--bone-dim);
+  font-size: 0.93rem;
+  line-height: 1.45;
+}
+
+.subLabel {
+  margin-top: 0.4rem;
+  color: var(--bone-mute);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.plainList {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.plainList li {
+  display: flex;
+  align-items: baseline;
+  max-width: 72ch;
+  color: var(--bone-dim);
+}
+
+.numbered {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.numbered li {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 0.5rem;
+  max-width: 76ch;
+  line-height: 1.5;
+}
+
+.num {
+  color: var(--accent-fg);
+  font-family: var(--font-mono);
+  font-weight: 800;
+}
+
+.related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.related li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.6rem;
+  border: var(--border) solid var(--line);
+  background: var(--bg);
+}
+
+.relatedLink {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.relatedLink:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+}
+
+.relatedMeta {
+  color: var(--bone-mute);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.books {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.books li {
+  display: grid;
+  gap: 0.1rem;
+  padding-left: 0.9rem;
+  border-left: 3px solid var(--line);
+}
+
+.bookTitle {
+  font-style: italic;
+  font-weight: 700;
+}
+
+.bookAuthor {
+  color: var(--bone-mute);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+.interviewNote {
+  display: flex;
+  align-items: baseline;
+  color: var(--bone-mute);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+  .levels {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Home teaser strip ---------- */
+
+.teaser {
+  border-bottom: var(--border-heavy) solid var(--line);
+  background: var(--bg-raised);
+}
+
+.teaserInner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding-block: 1rem;
+}
+
+.teaserText {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+.teaserNew {
+  padding: 0.05rem 0.45rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.teaserHeadline {
+  font-family: var(--font-sans);
+  font-size: var(--step-1);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.teaserMeta {
+  color: var(--bone-mute);
+}

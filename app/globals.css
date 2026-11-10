@@ -1,35 +1,44 @@
 /*
  * Session Log: a brutalist terminal design system.
- * Dark-first, warm off-black and bone, one terracotta accent.
- * Hard 2–3px borders, visible grid, offset hard shadows, Geist + Geist Mono.
+ * Halftone dot-grid paper (white with faint dots in light, charcoal in dark), one
+ * terracotta accent, hard 2-4px borders, offset hard shadows, Geist + Geist Mono.
  */
 
-:root {
-  /* Surfaces */
-  --bg: #141210;
-  --bg-raised: #1c1916;
-  --bg-sunken: #0e0d0b;
-  --bg-hover: #26221e;
+/* Dark palette. Also applied to .band, the charcoal dotted band used for the
+   header, home hero and footer, so bands stay dark in the light theme too. */
+:root,
+.band {
+  /* Surfaces: charcoal halftone (base + dot), raised cards, sunken wells */
+  --bg: #2b2b2b;
+  --dot: #414141;
+  --bg-raised: #353535;
+  --bg-sunken: #202020;
+  --bg-hover: #3d3d3d;
+  --band-rule: #1f1f1f;
 
-  /* Ink */
-  --bone: #efeadf;
-  --bone-dim: #b9b2a5;
-  --bone-mute: #8f897e; /* 5.3:1 on --bg; small text allowed */
+  /* Ink (contrast on --bg / on a dot / on --bg-raised) */
+  --bone: #efeadf; /* 11.8 / 8.5 / 10.2 */
+  --bone-dim: #c9c3b8; /* 8.1 / 5.8 / 7.0 */
+  --bone-mute: #bab3a7; /* 6.8 / 4.9 / 5.9 */
 
   /* Accent: terracotta. --accent fills, --accent-fg is accent-coloured text. */
   --accent: #d97757;
-  --accent-fg: #d97757; /* 6.2:1 on --bg */
-  --accent-ink: #141210; /* text on accent fills, 6.4:1 */
-  --accent-wash: rgb(217 119 87 / 0.14);
+  --accent-fg: #f2a283; /* 6.9 / 5.0 / 6.0 */
+  --accent-ink: #141210; /* text on accent fills, 6.0 */
+  --accent-wash: rgb(217 119 87 / 0.16);
   --on-bone: #141210; /* text on inverted (--bone) surfaces */
-  --focus: #d97757;
+  --focus: #f2a283;
 
   /* Diff and status */
-  --add: #9ccc7a;
-  --add-wash: rgb(156 204 122 / 0.12);
-  --del: #ef7f73;
-  --del-wash: rgb(239 127 115 / 0.12);
+  --add: #a9d98a; /* 8.8 / 6.3 */
+  --add-wash: rgb(169 217 138 / 0.12);
+  --del: #f49a90; /* 6.7 / 4.8 */
+  --del-wash: rgb(244 154 144 / 0.12);
 
+  color-scheme: dark;
+}
+
+:root {
   /* Lines */
   --line: var(--bone);
   --line-soft: color-mix(in srgb, var(--bone) 16%, transparent);
@@ -55,49 +64,124 @@
   --header-h: 3.5rem;
   --shadow-accent: 8px 8px 0 0 var(--accent);
   --shadow-bone: 6px 6px 0 0 var(--bone);
-
-  color-scheme: dark;
 }
 
-/* Light theme: bone paper, ink rules, the same terracotta. System default,
-   overridden either way by the toggle (data-theme on <html>). */
+/* Line tokens are derived from --bone, so re-derive them wherever --bone changes. */
+/* The band sits one step lighter than the dark page so it stays distinct;
+   its text tokens are lifted to keep 4.5:1 even over its lighter dots. */
+.band {
+  --bg: #333333;
+  --dot: #4a4a4a;
+  --bg-raised: #3b3b3b;
+  --bg-sunken: #262626;
+  --bg-hover: #454545;
+  --bone-dim: #d2cdc3; /* 8.0 / 5.6 on a dot */
+  --bone-mute: #c6c0b5; /* 7.0 / 4.9 */
+  --accent-fg: #f6b498; /* 7.2 / 5.0 */
+  --focus: #f6b498;
+  --del: #f7aaa1; /* 6.8 / 4.7 */
+  --shadow-bone: 6px 6px 0 0 var(--bone);
+  --line: var(--bone);
+  --line-soft: color-mix(in srgb, var(--bone) 16%, transparent);
+  --line-faint: color-mix(in srgb, var(--bone) 6%, transparent);
+}
+
+/* Light theme: white paper with a faint halftone, ink rules, the same terracotta. System
+   default, overridden either way by the toggle (data-theme on <html>). */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
-    --bg: #f3eee4;
-    --bg-raised: #fbf8f2;
-    --bg-sunken: #e8e1d3;
-    --bg-hover: #e2dacb;
-    --bone: #141210;
-    --bone-dim: #48423a; /* 8.6:1 on --bg */
-    --bone-mute: #685f54; /* 5.4:1 on --bg */
-    --accent-fg: #a3461f; /* 5.2:1 on --bg */
+    --bg: #ffffff;
+    --dot: #ebebeb; /* faint neutral halftone on white */
+    --bg-raised: #ffffff;
+    --bg-sunken: #f5f2f0;
+    --bg-hover: #efeae7;
+    --bone: #141210; /* 18.7 on white / 15.7 on a dot */
+    --bone-dim: #48423a; /* 9.9 / 8.3 */
+    --bone-mute: #574a43; /* 8.5 / 7.1 */
+    --accent-fg: #873413; /* 8.3 / 7.0 */
     --accent-wash: rgb(217 119 87 / 0.18);
-    --on-bone: #f3eee4;
-    --focus: #a3461f;
-    --add: #2e6a1c;
-    --add-wash: rgb(46 106 28 / 0.1);
-    --del: #ad2a1e;
+    --on-bone: #ffffff;
+    --focus: #873413;
+    --add: #235515; /* 8.8 / 7.4 */
+    --add-wash: rgb(35 85 21 / 0.1);
+    --del: #962216; /* 8.3 / 6.9 */
     --del-wash: rgb(173 42 30 / 0.09);
     color-scheme: light;
   }
 }
 
 :root[data-theme="light"] {
-  --bg: #f3eee4;
-  --bg-raised: #fbf8f2;
-  --bg-sunken: #e8e1d3;
-  --bg-hover: #e2dacb;
-  --bone: #141210;
-  --bone-dim: #48423a; /* 8.6:1 on --bg */
-  --bone-mute: #685f54; /* 5.4:1 on --bg */
-  --accent-fg: #a3461f; /* 5.2:1 on --bg */
+  --bg: #ffffff;
+  --dot: #ebebeb; /* faint neutral halftone on white */
+  --bg-raised: #ffffff;
+  --bg-sunken: #f5f2f0;
+  --bg-hover: #efeae7;
+  --bone: #141210; /* 18.7 on white / 15.7 on a dot */
+  --bone-dim: #48423a; /* 9.9 / 8.3 */
+  --bone-mute: #574a43; /* 8.5 / 7.1 */
+  --accent-fg: #873413; /* 8.3 / 7.0 */
   --accent-wash: rgb(217 119 87 / 0.18);
-  --on-bone: #f3eee4;
-  --focus: #a3461f;
-  --add: #2e6a1c;
-  --add-wash: rgb(46 106 28 / 0.1);
-  --del: #ad2a1e;
+  --on-bone: #ffffff;
+  --focus: #873413;
+  --add: #235515; /* 8.8 / 7.4 */
+  --add-wash: rgb(35 85 21 / 0.1);
+  --del: #962216; /* 8.3 / 6.9 */
   --del-wash: rgb(173 42 30 / 0.09);
+  color-scheme: light;
+}
+
+/* In the light theme the band is light too: pale grey dots, dark ink, an
+   ink rule. Its text tokens step one shade darker than the page's so every
+   label stays at 4.5:1 or better even over a dot. Dark theme keeps charcoal. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .band {
+    --bg: #f2f2f2; /* one step off the white page */
+    --dot: #dddddd;
+    --bg-raised: #ffffff;
+    --bg-sunken: #e9e9e9;
+    --bg-hover: #e4e4e4;
+    --band-rule: #141210; /* thick ink rule */
+    --bone: #141210; /* 16.7 on the band / 13.8 on a dot */
+    --bone-dim: #403a33; /* 10.0 / 8.3 */
+    --bone-mute: #4d413b; /* 8.8 / 7.2 */
+    --accent-fg: #7a2e10; /* 8.4 / 7.0 */
+    --accent-wash: rgb(217 119 87 / 0.18);
+    --on-bone: #ffffff;
+    --focus: #7a2e10;
+    --add: #1e4a12; /* 9.2 / 7.6 */
+    --add-wash: rgb(30 74 18 / 0.1);
+    --del: #861e13; /* 8.5 / 7.0 */
+    --del-wash: rgb(134 30 19 / 0.09);
+    --shadow-bone: 6px 6px 0 0 var(--bone);
+    --line: var(--bone);
+    --line-soft: color-mix(in srgb, var(--bone) 16%, transparent);
+    --line-faint: color-mix(in srgb, var(--bone) 6%, transparent);
+    color-scheme: light;
+  }
+}
+
+:root[data-theme="light"] .band {
+  --bg: #f2f2f2; /* one step off the white page */
+  --dot: #dddddd;
+  --bg-raised: #ffffff;
+  --bg-sunken: #e9e9e9;
+  --bg-hover: #e4e4e4;
+  --band-rule: #141210; /* thick ink rule */
+  --bone: #141210; /* 16.7 on the band / 13.8 on a dot */
+  --bone-dim: #403a33; /* 10.0 / 8.3 */
+  --bone-mute: #4d413b; /* 8.8 / 7.2 */
+  --accent-fg: #7a2e10; /* 8.4 / 7.0 */
+  --accent-wash: rgb(217 119 87 / 0.18);
+  --on-bone: #ffffff;
+  --focus: #7a2e10;
+  --add: #1e4a12; /* 9.2 / 7.6 */
+  --add-wash: rgb(30 74 18 / 0.1);
+  --del: #861e13; /* 8.5 / 7.0 */
+  --del-wash: rgb(134 30 19 / 0.09);
+  --shadow-bone: 6px 6px 0 0 var(--bone);
+  --line: var(--bone);
+  --line-soft: color-mix(in srgb, var(--bone) 16%, transparent);
+  --line-faint: color-mix(in srgb, var(--bone) 6%, transparent);
   color-scheme: light;
 }
 
@@ -125,13 +209,10 @@ html {
 body {
   min-width: 320px;
   margin: 0;
+  /* Halftone dot grid behind everything (9px cells, 1.3px dots). */
   background-color: var(--bg);
-  /* The visible 64px grid behind everything. */
-  background-image:
-    linear-gradient(var(--line-faint) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-faint) 1px, transparent 1px);
-  background-size: 64px 64px;
-  background-position: center top;
+  background-image: radial-gradient(var(--dot) 1.3px, transparent 1.5px);
+  background-size: 9px 9px;
   color: var(--bone);
   font-family: var(--font-sans);
   font-size: var(--step-0);
@@ -205,6 +286,14 @@ pre {
   .frame {
     border-inline: 0;
   }
+}
+
+/* Charcoal dotted band (dark tokens come from the :root, .band block above). */
+.band {
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--dot) 1.3px, transparent 1.5px);
+  background-size: 9px 9px;
+  color: var(--bone);
 }
 
 .sr-only {
@@ -536,4 +625,35 @@ pre {
   background: var(--accent);
   color: var(--accent-ink);
   text-decoration-color: transparent;
+}
+
+/* ---------- Print: plain white paper, dark ink, no pattern or overlay ---------- */
+
+@media print {
+  :root,
+  .band {
+    --bg: #ffffff;
+    --dot: transparent;
+    --bg-raised: #ffffff;
+    --bg-sunken: #ffffff;
+    --bone: #141210;
+    --bone-dim: #333333;
+    --bone-mute: #555555;
+    --accent-fg: #9a3f1b;
+    --on-bone: #ffffff;
+    --add: #285e18;
+    --del: #ad2a1e;
+    color-scheme: light;
+  }
+
+  html,
+  body,
+  .band {
+    background: #ffffff !important;
+  }
+
+  #intro,
+  .skip-link {
+    display: none !important;
+  }
 }

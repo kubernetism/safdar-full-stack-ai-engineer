@@ -4,8 +4,7 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  border-bottom: var(--border) solid var(--line);
-  background: var(--bg);
+  border-bottom: 4px solid var(--band-rule);
 }
 
 .headerInner {
@@ -205,20 +204,20 @@
     border-left: 0;
   }
 
-  .nav li {
-    flex: 1;
-  }
-
   .nav li:last-child a {
     border-right: 0;
+  }
+
+  .nav li {
+    flex: 1 1 auto;
   }
 
   .nav a {
     flex: 1;
     justify-content: center;
     min-height: 2.75rem;
-    padding-inline: 0.25rem;
-    font-size: 0.8125rem;
+    padding-inline: 0.3rem;
+    font-size: 0.72rem;
   }
 }
 
@@ -233,8 +232,7 @@
 .footer {
   position: relative;
   overflow: hidden;
-  border-top: var(--border-heavy) solid var(--line);
-  background: var(--bg-sunken);
+  border-top: 4px solid var(--band-rule);
 }
 
 .footerInner {

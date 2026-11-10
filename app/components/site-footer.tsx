@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { profile } from "../content";
 import { Arrow } from "./glyphs";
 import { RebuildButton } from "./rebuild-button";
@@ -6,7 +7,7 @@ import styles from "./site-chrome.module.css";
 
 export function SiteFooter() {
   return (
-    <footer className={styles.footer}>
+    <footer className={`band ${styles.footer}`}>
       <div className={`shell ${styles.footerInner}`}>
         <p className={styles.statusLine}>
           <Sprite size={22} mode="still" />
@@ -26,6 +27,12 @@ export function SiteFooter() {
             <a href={profile.linkedin} target="_blank" rel="noreferrer">
               LinkedIn <Arrow direction="up-right" size="0.9em" />
             </a>
+          </li>
+          <li>
+            <Link href="/patterns">Patterns</Link>
+          </li>
+          <li>
+            <Link href="/fde">FDE roadmap</Link>
           </li>
           <li>
             <a href={`mailto:${profile.email}`}>Email</a>
